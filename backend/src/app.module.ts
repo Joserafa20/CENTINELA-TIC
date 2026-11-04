@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AnalysesModule } from './modules/analyses/analyses.module';
 import { EmailAnalysisModule } from './modules/email/email-analysis.module';
+import { FileAnalysisModule } from './modules/file/file-analysis.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -37,6 +38,7 @@ import appConfig from './config/app.config';
     DashboardModule,
     AnalysesModule,
     EmailAnalysisModule,
+    FileAnalysisModule,
   ],
 })
 export class AppModule {}

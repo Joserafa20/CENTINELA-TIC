@@ -78,4 +78,7 @@ export const api = {
   emailAnalysis: {
     get: (id: string) => apiFetch<EmailAnalysisResult>(`/v1/email-analysis/${id}`),
   },
+  fileAnalysis: {
+    get: (id: string) => apiFetch<unknown>(`/v1/file-analysis/${id}`),
+  },
 };
