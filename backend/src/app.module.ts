@@ -7,6 +7,7 @@ import { HealthModule } from './modules/health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { AnalysesModule } from './modules/analyses/analyses.module';
+import { EmailAnalysisModule } from './modules/email/email-analysis.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -35,6 +36,7 @@ import appConfig from './config/app.config';
     AuthModule,
     DashboardModule,
     AnalysesModule,
+    EmailAnalysisModule,
   ],
 })
 export class AppModule {}

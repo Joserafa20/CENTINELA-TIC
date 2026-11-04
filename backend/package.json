@@ -31,12 +31,14 @@
     "@nestjs/platform-express": "^12.0.1",
     "@nestjs/swagger": "^12.1.0",
     "@prisma/client": "^5.22.0",
+    "@types/multer": "^2.3.0",
     "bcrypt": "^6.0.0",
     "bullmq": "^6.7.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "cookie-parser": "^1.4.7",
     "ioredis": "^6.0.0",
+    "mailparser": "^3.14.2",
     "nestjs-pino": "^5.3.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
@@ -76,6 +78,7 @@
     "workerd@1.20261002.1": true,
     "prisma@5.22.0": true,
     "@prisma/engines@5.22.0": true,
-    "ioredis@6.0.0": true
+    "ioredis@6.0.0": true,
+    "@prisma/client@5.22.0": true
   }
 }

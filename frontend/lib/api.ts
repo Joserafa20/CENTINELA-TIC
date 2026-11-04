@@ -44,6 +44,29 @@ export interface AnalysesList {
   meta: { total: number; page: number; limit: number };
 }
 
+export interface EmailAnalysisResult {
+  id: string;
+  status: string;
+  riskLevel: RiskLevel | null;
+  riskExplanation: string | null;
+  createdAt: string;
+  completedAt: string | null;
+  headers: {
+    from: string | null;
+    replyTo: string | null;
+    returnPath: string | null;
+    subject: string | null;
+    date: string | null;
+    messageId: string | null;
+    spf: string | null;
+    dkim: string | null;
+    dmarc: string | null;
+  } | null;
+  urls: string[];
+  attachments: { filename: string | null; mimeType: string; sha256: string; size: number }[];
+  indicators: { id: string; type: string; description: string; severity: string }[];
+}
+
 export const api = {
   dashboard: {
     stats: () => apiFetch<DashboardStats>('/v1/dashboard/stats'),
@@ -51,5 +74,8 @@ export const api = {
   analyses: {
     list: (limit = 10, page = 1) =>
       apiFetch<AnalysesList>(`/v1/analyses?limit=${limit}&page=${page}`),
+  },
+  emailAnalysis: {
+    get: (id: string) => apiFetch<EmailAnalysisResult>(`/v1/email-analysis/${id}`),
   },
 };

@@ -1,0 +1,23 @@
+Received: from mail.legitimate.com (mail.legitimate.com [5.5.5.5])
+        by mx.recipient.com with ESMTPS
+Received-SPF: pass (recipient.com: domain of hello@legitimate.com designates 5.5.5.5 as permitted sender)
+Authentication-Results: mx.recipient.com;
+       spf=pass smtp.mailfrom=hello@legitimate.com;
+       dkim=pass header.i=@legitimate.com;
+       dmarc=pass header.from=legitimate.com
+DKIM-Signature: v=1; a=rsa-sha256; d=legitimate.com; s=default;
+        h=from:to:subject:date; bh=abc123=; b=xyz789=
+From: "Legitimate Sender" <hello@legitimate.com>
+To: analyst@example.com
+Subject: Monthly newsletter
+Date: Mon, 04 Nov 2026 09:00:00 +0000
+Message-ID: <test-all-pass-001@legitimate.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Hello,
+
+This is your monthly newsletter. No action required.
+
+Regards,
+Legitimate Team
