@@ -1,0 +1,185 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AnalysisType {
+  EMAIL
+  FILE
+  URL
+  EMAIL_VERIFY
+}
+
+enum AnalysisStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum RiskLevel {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+  CLEAN
+  INCONCLUSIVE
+}
+
+enum UserRole {
+  ADMIN
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  role         UserRole  @default(ADMIN)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  analyses  Analysis[]
+  auditLogs AuditLog[]
+  reports   Report[]
+}
+
+model Analysis {
+  id              String         @id @default(uuid())
+  type            AnalysisType
+  status          AnalysisStatus @default(PENDING)
+  inputHash       String?
+  inputName       String?
+  riskLevel       RiskLevel?
+  riskExplanation String?
+  createdAt       DateTime       @default(now())
+  completedAt     DateTime?
+  createdBy       String?
+
+  user          User?          @relation(fields: [createdBy], references: [id])
+  emailAnalysis EmailAnalysis?
+  fileAnalysis  FileAnalysis?
+  urlAnalysis   UrlAnalysis?
+  emailVerify   EmailVerify?
+  reports       Report[]
+
+  @@index([type])
+  @@index([status])
+  @@index([riskLevel])
+  @@index([createdAt])
+  @@index([createdBy])
+}
+
+model EmailAnalysis {
+  id          String   @id @default(uuid())
+  analysisId  String   @unique
+  analysis    Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  fromAddress String?
+  replyTo     String?
+  returnPath  String?
+  subject     String?
+  date        String?
+  messageId   String?
+  rawHeaders  Json?
+  spfResult   String?
+  dkimResult  String?
+  dmarcResult String?
+  arcResult   String?
+  urls        Json     @default("[]")
+  attachments Json     @default("[]")
+  indicators  Json     @default("[]")
+  bodyText    String?
+
+  createdAt DateTime @default(now())
+}
+
+model FileAnalysis {
+  id         String   @id @default(uuid())
+  analysisId String   @unique
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  sha256           String?
+  detectedType     String?
+  declaredExt      String?
+  extensionMismatch Boolean @default(false)
+  fileSize         Int?
+  clamResult       Json?
+  yaraMatches      Json     @default("[]")
+  metadata         Json?
+  structuralFindings Json   @default("[]")
+  indicators       Json     @default("[]")
+
+  createdAt DateTime @default(now())
+}
+
+model UrlAnalysis {
+  id         String   @id @default(uuid())
+  analysisId String   @unique
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  url           String?
+  domain        String?
+  parsed        Json?
+  dnsRecords    Json?
+  tlsCert       Json?
+  redirectChain Json    @default("[]")
+  indicators    Json    @default("[]")
+
+  createdAt DateTime @default(now())
+}
+
+model EmailVerify {
+  id         String   @id @default(uuid())
+  analysisId String   @unique
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  email          String
+  syntaxResult   Json?
+  domainResult   Json?
+  mailConfig     Json?
+  authentication Json?
+  reputation     Json?
+
+  createdAt DateTime @default(now())
+}
+
+model Report {
+  id         String   @id @default(uuid())
+  analysisId String
+  analysis   Analysis @relation(fields: [analysisId], references: [id])
+  createdBy  String
+  user       User     @relation(fields: [createdBy], references: [id])
+
+  analystName String?
+  notes       String?
+  filePath    String?
+
+  createdAt DateTime @default(now())
+}
+
+model AppConfig {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  encrypted Boolean  @default(false)
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  action     String
+  resource   String?
+  resourceId String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}

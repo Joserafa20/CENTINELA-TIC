@@ -10,7 +10,7 @@
 | Phase | Name | Status | Description |
 |-------|------|--------|-------------|
 | 0 | Discovery & Specs | ✅ IN PROGRESS | Environment check, SDD documentation, all module specs |
-| 1 | Infrastructure | ⏳ PENDING | Docker Compose, PostgreSQL, Redis, NestJS base, Next.js base, health check |
+| 1 | Infrastructure | ✅ COMPLETE | Docker Compose, PostgreSQL, Redis, NestJS base, Next.js base, health check |
 | 2 | Design & Dashboard | ⏳ PENDING | Visual identity, navigation, dashboard with real data, dark/light mode |
 | 3 | Email Analyzer | ⏳ PENDING | EML/MSG/TXT parser, header extraction, auth analysis, risk scoring |
 | 4 | File Analyzer | ⏳ PENDING | ClamAV, YARA, SHA-256, PDF/Office/ZIP inspection, isolated container |
