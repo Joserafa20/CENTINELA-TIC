@@ -5,6 +5,8 @@ import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './modules/prisma/prisma.module';
 import { HealthModule } from './modules/health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { AnalysesModule } from './modules/analyses/analyses.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -31,6 +33,8 @@ import appConfig from './config/app.config';
     PrismaModule,
     HealthModule,
     AuthModule,
+    DashboardModule,
+    AnalysesModule,
   ],
 })
 export class AppModule {}

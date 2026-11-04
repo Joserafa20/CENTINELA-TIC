@@ -14,6 +14,7 @@ import {
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -58,8 +59,9 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="px-4 py-3 border-t border-sidebar-border">
-        <p className="text-xs text-muted-foreground text-center">v1.0.0 — Local</p>
+      <div className="px-4 py-3 border-t border-sidebar-border flex items-center justify-between">
+        <p className="text-xs text-muted-foreground">v1.0.0 — Local</p>
+        <ThemeToggle />
       </div>
     </aside>
   );
