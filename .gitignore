@@ -1,0 +1,51 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# NestJS / TypeScript
+backend/dist/
+backend/build/
+
+# Scanner
+scanner/__pycache__/
+scanner/*.pyc
+
+# Docker
+docker-compose.override.yml
+
+# Database
+*.sql.bak
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Uploads (never committed)
+uploads/
+tmp/
+
+# Prisma generated
+backend/src/generated/
