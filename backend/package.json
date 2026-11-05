@@ -45,6 +45,7 @@
     "pino": "^10.4.0",
     "pino-http": "^11.0.0",
     "pino-pretty": "^13.2.0",
+    "puppeteer": "^25.16.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -79,6 +80,7 @@
     "prisma@5.22.0": true,
     "@prisma/engines@5.22.0": true,
     "ioredis@6.0.0": true,
-    "@prisma/client@5.22.0": true
+    "@prisma/client@5.22.0": true,
+    "puppeteer@25.16.0": true
   }
 }

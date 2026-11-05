@@ -94,4 +94,8 @@ export const api = {
         body: JSON.stringify({ ioc }),
       }),
   },
+  reports: {
+    pdfUrl: (analysisId: string) => `${API_BASE}/v1/reports/${analysisId}/pdf`,
+    csvUrl: () => `${API_BASE}/v1/reports/export/csv`,
+  },
 };
