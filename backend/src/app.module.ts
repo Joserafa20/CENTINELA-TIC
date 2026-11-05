@@ -11,6 +11,7 @@ import { EmailAnalysisModule } from './modules/email/email-analysis.module';
 import { FileAnalysisModule } from './modules/file/file-analysis.module';
 import { EmailVerifyModule } from './modules/email-verify/email-verify.module';
 import { UrlAnalysisModule } from './modules/url-analysis/url-analysis.module';
+import { ThreatIntelModule } from './modules/threat-intel/threat-intel.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -43,6 +44,7 @@ import appConfig from './config/app.config';
     FileAnalysisModule,
     EmailVerifyModule,
     UrlAnalysisModule,
+    ThreatIntelModule,
   ],
 })
 export class AppModule {}

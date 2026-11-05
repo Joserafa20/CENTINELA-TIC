@@ -87,4 +87,11 @@ export const api = {
   urlAnalysis: {
     get: (id: string) => apiFetch<unknown>(`/v1/url-analysis/${id}`),
   },
+  threatIntel: {
+    lookup: (ioc: string) =>
+      apiFetch<unknown>('/v1/threat-intel/lookup', {
+        method: 'POST',
+        body: JSON.stringify({ ioc }),
+      }),
+  },
 };
