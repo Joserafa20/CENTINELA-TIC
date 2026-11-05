@@ -162,8 +162,10 @@ export class HttpProbeService {
               const now = Date.now();
               const validTo = cert.valid_to ? new Date(cert.valid_to) : null;
               const validFrom = cert.valid_from ? new Date(cert.valid_from) : null;
-              const issuerCN = cert.issuer?.CN ?? cert.issuer?.O ?? null;
-              const subjectCN = cert.subject?.CN ?? null;
+              const issuerRaw = cert.issuer?.CN ?? cert.issuer?.O ?? null;
+              const issuerCN = Array.isArray(issuerRaw) ? issuerRaw[0] ?? null : issuerRaw;
+              const subjectRaw = cert.subject?.CN ?? null;
+              const subjectCN = Array.isArray(subjectRaw) ? subjectRaw[0] ?? null : subjectRaw;
               tls = {
                 subject: subjectCN,
                 issuer: issuerCN,

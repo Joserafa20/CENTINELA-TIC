@@ -23,7 +23,7 @@ export class AuditLogService {
           action: entry.action,
           resource: entry.resource ?? null,
           resourceId: entry.resourceId ?? null,
-          metadata: entry.metadata ?? {},
+          metadata: (entry.metadata ?? {}) as object,
         },
       });
     } catch (err) {
