@@ -10,6 +10,7 @@ import { AnalysesModule } from './modules/analyses/analyses.module';
 import { EmailAnalysisModule } from './modules/email/email-analysis.module';
 import { FileAnalysisModule } from './modules/file/file-analysis.module';
 import { EmailVerifyModule } from './modules/email-verify/email-verify.module';
+import { UrlAnalysisModule } from './modules/url-analysis/url-analysis.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -41,6 +42,7 @@ import appConfig from './config/app.config';
     EmailAnalysisModule,
     FileAnalysisModule,
     EmailVerifyModule,
+    UrlAnalysisModule,
   ],
 })
 export class AppModule {}

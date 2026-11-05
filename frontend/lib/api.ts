@@ -84,4 +84,7 @@ export const api = {
   emailVerify: {
     get: (id: string) => apiFetch<unknown>(`/v1/email-verify/${id}`),
   },
+  urlAnalysis: {
+    get: (id: string) => apiFetch<unknown>(`/v1/url-analysis/${id}`),
+  },
 };
