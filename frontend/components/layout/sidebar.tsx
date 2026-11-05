@@ -38,7 +38,7 @@ export function Sidebar() {
           <Shield className="h-6 w-6 text-primary" />
           <span className="font-bold text-lg tracking-tight">CENTINELA TIC</span>
         </div>
-        <p className="text-xs text-muted-foreground mt-1">Cybersecurity Platform</p>
+        <p className="text-xs text-muted-foreground mt-1">Cybersecurity Platform v1.0</p>
       </div>
 
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
@@ -60,7 +60,7 @@ export function Sidebar() {
       </nav>
 
       <div className="px-4 py-3 border-t border-sidebar-border flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">v1.0.0 — Local</p>
+        <p className="text-xs text-muted-foreground">v1.0.0 — Local only</p>
         <ThemeToggle />
       </div>
     </aside>

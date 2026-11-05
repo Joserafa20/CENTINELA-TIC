@@ -1,0 +1,91 @@
+version: '3.9'
+
+# Production overlay — use with:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# All services listen only on 127.0.0.1. No service is reachable from the
+# external network. Terminate TLS in a reverse proxy (nginx, Caddy) in front.
+
+services:
+  postgres:
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+  redis:
+    restart: always
+    command: >
+      redis-server
+        --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+        --save 60 1
+        --loglevel warning
+        --maxmemory 256mb
+        --maxmemory-policy allkeys-lru
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 320M
+
+  backend:
+    restart: always
+    environment:
+      NODE_ENV: production
+      BIND_HOST: "0.0.0.0"   # inside container; Docker maps to 127.0.0.1 externally
+      PORT: 3001
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?ENCRYPTION_KEY is required}
+      CORS_ORIGIN: ${CORS_ORIGIN:?CORS_ORIGIN is required}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?ADMIN_EMAIL is required}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD is required}
+      VIRUSTOTAL_API_KEY: ${VIRUSTOTAL_API_KEY:-}
+      UPLOAD_MAX_SIZE_MB: ${UPLOAD_MAX_SIZE_MB:-50}
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+    security_opt:
+      - no-new-privileges:true
+    read_only: false  # needs /tmp for Puppeteer + uploads
+
+  frontend:
+    restart: always
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?NEXT_PUBLIC_API_URL is required}
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    security_opt:
+      - no-new-privileges:true
+
+  scanner:
+    restart: always
+    environment:
+      REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
+      SCAN_TIMEOUT_SECONDS: ${SCAN_TIMEOUT_SECONDS:-30}
+      MAX_EXTRACT_DEPTH: ${MAX_EXTRACT_DEPTH:-5}
+      MAX_EXTRACT_SIZE_MB: ${MAX_EXTRACT_SIZE_MB:-200}
+      MAX_EXTRACT_FILES: ${MAX_EXTRACT_FILES:-1000}
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+networks:
+  internal:
+    driver: bridge
+    internal: false
